@@ -4,8 +4,6 @@ import dungeon.engine.items.Gold; // Needed for the gold pickup test
 import dungeon.engine.items.Empty; // Needed to check if gold was removed
 import dungeon.engine.items.Trap;
 import dungeon.engine.items.Entry;
-import dungeon.engine.items.HealthPotion;
-import dungeon.engine.items.MeleeMutant;
 import dungeon.engine.items.RangedMutant;
 import dungeon.engine.items.Ladder;
 import org.junit.jupiter.api.BeforeEach;
