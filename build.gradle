@@ -11,45 +11,40 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    junitVersion = '5.9.1'
-}
+// ext { // You can keep this if you want, but we'll use the BOM (Bill of Materials)
+//    junitVersion = '5.9.1'
+// }
 
 java {
-    sourceCompatibility = '21'
-    targetCompatibility = '21'
+    sourceCompatibility = JavaVersion.VERSION_17 // Use JavaVersion enum for clarity
+    targetCompatibility = JavaVersion.VERSION_17 // Use JavaVersion enum
 }
 
 application {
-    mainModule = 'dungeon.gui'
-    mainClass = 'dungeon.gui.RunGUI'
+
+    mainClass = 'dungeon.gui.RunGame'
 }
 
 javafx {
-    version = '21.0.6'
-    modules = ['javafx.controls', 'javafx.fxml']
+    version = "17.0.10" // Match a version compatible with Java 17, or use the one your starter intended. "21.0.6" is for Java 21.
+    // Let's stick to a Java 17 compatible JavaFX version for now.
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    // JUnit 5 (Jupiter)
+    testImplementation platform("org.junit:junit-bom:5.10.2") // Use the BOM to manage versions
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+
+    // You might already have JavaFX dependencies here from the javafxplugin,
+    // or they might be managed by the plugin itself.
+    // If not, and the plugin doesn't add them, you'd add them like:
+    // implementation "org.openjfx:javafx-controls:${javafx.version}"
+    // implementation "org.openjfx:javafx-fxml:${javafx.version}"
+    // But usually the plugin handles this.
 }
 
-testing {
-    suites {
-        test {
-            useJUnitJupiter()
-        }
-    }
-}
-
-sourceSets.main {
-    java {
-        srcDir 'src/main/java'
-    }
-    resources {
-        // we also look for resources (like *.fxml) in src/main/java
-        srcDirs = ['src/main/java', 'src/main/resources']
-        exclude "**/*.java"
-    }
+test {
+    useJUnitPlatform() // This tells Gradle to use JUnit 5 for running tests
 }
